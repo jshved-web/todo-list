@@ -1,0 +1,51 @@
+$size: 25px;
+$color: #8263c0;
+@mixin button($color) {
+  font-size: 20px;
+  cursor: pointer;
+  color: $color;
+  border: 2px solid #8263c0;
+  border-radius: 10px;
+}
+.todo{
+  font-size: $size;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #002c6f;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px;
+  background: #cbc7c7;
+  color: $color;
+  &-title{
+    font-weight: bold;
+  }
+  &-buttons{
+    z-index: 1;
+  }
+  &-date{
+    font-size: $size;
+  }
+  &-btn{
+    @include button(red);
+    padding: 2px;
+  }
+}
+.disabled{
+  opacity: 0.5;
+  position: relative;
+  &:after{
+    z-index: 0;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: brown;
+  }
+}
+.push-btn{
+  @include button($color);
+  margin-right: 5px;
+  padding: 2px;
+}

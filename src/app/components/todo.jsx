@@ -2,11 +2,22 @@ import React from 'react'
 import {getUserTime} from '../../utils/getUserDate'
 import {useHistory, useParams} from 'react-router-dom'
 
+/**
+ *
+ * @param {object} data Данные данной задачи
+ * @param {function} onDelete Функция для удаления данных на сервере
+ * @param id Уникальный идентификатор записи пользователя
+ * @returns {JSX.Element}
+ */
 const Todo = ({data, onDelete, id}) => {
   const history = useHistory()
   const params = useParams()
-  console.log(data)
   params.data = data
+
+  /**
+   * Функция для проверки истечения срока выполнения задачи
+   * @returns {string}
+   */
   const isCompleted = () => {
     if (data.dateOfEnd === undefined) return ''
     else if (data.check
@@ -15,6 +26,9 @@ const Todo = ({data, onDelete, id}) => {
       return ` disabled`
     return ''
   }
+  /**
+   * Функция для перенаправления пользователя на страницу редактирования
+   */
   const pushToEdit = () => {
     history.push(`/${id}`, data)
   }

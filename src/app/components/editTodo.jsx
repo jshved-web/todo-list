@@ -4,15 +4,28 @@ import TodoForm from './todoForm'
 import todosService from '../../services/todos.service'
 import {postContent} from '../../utils/postData'
 
+/**
+ * Компонент редактирования задачи пользователя
+ * @returns {JSX.Element}
+ */
 const EditTodo = () => {
   const history = useHistory()
   const params = useParams()
   const data = history.location.state
 
+  /**
+   * Функция перенаправляния на главную страницу
+   */
   const backToMainPage = () => {
     history.push('/')
   }
-  console.log(data)
+  /**
+   * Функция для обновления данных текущей задачи и перенаправления пользователя на главную страницу
+   * после завершения обновления
+   * @param {object} e Объект Event описывает событие, произошедшее на странице
+   * @param {object} inputValue Состояние в котором хранятся данные введенные пользователем
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async (e, inputValue) => {
     e.preventDefault()
     const content = postContent(inputValue.text,

@@ -1,7 +1,9 @@
 import httpService from "./http.service"
 
 const todosEndPoint = "todos"
-
+/**
+ * Объект со вложенными методами которые выполняют HTTP-запросы на серверную часть Web-приложения
+ */
 const todosService = {
   get: async () => {
     const {data} = await httpService.get(todosEndPoint + '.json')

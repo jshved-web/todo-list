@@ -1,6 +1,13 @@
 import React, {useRef, useState} from 'react'
 import FilesUpLoad from './filesUpLoad'
 
+/**
+ * Компонент форма, позволяющий пользователю вводить информацию для последующей обработки системой
+ * @param {function} handleSubmit Функция отправки данных с формы на сервер
+ * @param {object} data Объект (состояние) служащий для заполнения полей формы по умолчанию
+ * @param {string} btnTitle Строка названия кнопки формы
+ * @return {JSX.Element}  Возвращает jsx разметку и компонент служащий для отображения загружженных файлов <FilesUpLoad/>
+ */
 const TodoForm = ({handleSubmit, data, btnTitle}) => {
   const [inputValue, setInputValue] = useState({
     text: data?.title,
@@ -11,6 +18,10 @@ const TodoForm = ({handleSubmit, data, btnTitle}) => {
   })
   const ref = useRef()
 
+  /**
+   * Функция загрузки файлов, представляющая файл, кодированый в base64 строку и помещает их в
+   * состояние для дальнейшей отправки на сервер и отображения.
+   */
   const uploadFiles = () => {
     if (!ref.current.files.length) return
     const files = Array.from(ref.current.files)
@@ -25,10 +36,20 @@ const TodoForm = ({handleSubmit, data, btnTitle}) => {
       reader.readAsDataURL(file)
     })
   }
+  /**
+   * Функция помещает в состояние имя эелемента который изменился и данные которые были введены
+   * @param {object} target Это элемент, на котором произошло событие
+   *
+   */
   const handleChangeCheck = ({target}) => {
     setInputValue({...inputValue, [target.name]: target.checked})
   }
 
+  /**
+   * Функция помещает в состояние имя эелемента который изменился и данные которые были введены
+   * @param {object} target Это элемент, на котором произошло событие
+   *
+   */
   const handleChange = ({target}) => {
     setInputValue({...inputValue, [target.name]: target.value.trim()})
   }
@@ -62,16 +83,16 @@ const TodoForm = ({handleSubmit, data, btnTitle}) => {
         <input
           type="file"
           name="file"
-          className='file-input'
+          className="file-input"
           ref={ref}
           multiple
           onChange={uploadFiles}
         />
         {inputValue.files &&
           Object.keys(inputValue.files)
-          .map(data => (
-          <FilesUpLoad data={inputValue.files[data]} key={inputValue.files[data].file}/>
-        ))}
+            .map(data => (
+              <FilesUpLoad data={inputValue.files[data]} key={inputValue.files[data].file}/>
+            ))}
         {btnTitle === 'Изменить' ? (
           <div className="form-check">
             <label>Завершено</label>

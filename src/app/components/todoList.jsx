@@ -5,9 +5,19 @@ import todosService from '../../services/todos.service'
 import Todo from './todo'
 import {postContent} from '../../utils/postData'
 
+/**
+ * Компонент для отображения задач пользователя
+ * @returns {JSX.Element} Возвращает компонент <TodoForm/> и <Todo/>
+ */
 const TodoList = () => {
   const [todos, setTodos] = useState({})
   const [isLoading, setIsLoading] = useState(true)
+
+  /**
+   * Асинхронная функция служащая для запроса к серверу и записи полученных
+   * данных в состояние
+   * @returns {Promise<void>}
+   */
   const getTodos = async () => {
     try {
       const data = await todosService.get()
@@ -17,14 +27,21 @@ const TodoList = () => {
       console.warn('Something was wrong', error)
     }
   }
+
   useEffect(() => {
     getTodos()
   }, [])
 
-  const handleSubmit = async (e, inputValue) => {
+  /**
+   * Функция отправки данных (задачи пользователя) на сервер
+   * @param {object} e Объект Event описывает событие, произошедшее на странице
+   * @param {object} value Состояние в котором хранятся данные введенные пользователем
+   * @returns {Promise<void>}
+   */
+  const handleSubmit = async (e, value) => {
     e.preventDefault()
     try {
-      const content = postContent(inputValue.text, inputValue.date, inputValue.description, inputValue.check, inputValue.files)
+      const content = postContent(value.text, value.date, value.description, value.check, value.files)
       const {name} = await todosService.create(content)
       setTodos({...todos, [name]: content})
     } catch (e) {
@@ -32,6 +49,11 @@ const TodoList = () => {
     }
   }
 
+  /**
+   * Функция удаления данных (задачи пользователя) с сервера и обновления данных на клиенте
+   * @param _id Уникальный идентификатор задачи пользователя
+   * @returns {Promise<void>}
+   */
   const handleDelete = async (_id) => {
     await todosService.remove(_id)
     getTodos()

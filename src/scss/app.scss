@@ -1,7 +1,16 @@
+@import "normalize";
+@import "editTodo";
+@import "todoList";
+@import "todoForm";
+@import "filesUpLoad";
+@import "todo";
+
 .wrapper {
+  width: calc(100vw - 100px);
   height: 100%;
-  background-color: #a90000;
-  margin: 0 auto;
+  background: #cbc7c7;
+  color: #8263c0;
+  margin: 50px auto;
   border-radius: 10px;
-  max-width: 600px;
+  max-width: 900px;
 }
